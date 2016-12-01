@@ -28,15 +28,16 @@ var animalView = Backbone.View.extend({
     "click .edit": "editAnimal",
     "click .delete": "deleteAnimal"
   },
+  createTemplate: _.template('<%= name %> is <%= color %>.'),
   initialize: function(){
     this.render();    // render define logic for the app
     this.on("change",function(){
       console.log("Your model is changed!");
-    })
+    });
   },
   render: function(){
     // this.model is to get animal model
-    // $el is saying
-    this.$el.html(this.model.get("name") + " is " + this.model.get("color"));
+    // $el is reference to don element, must use el in views.
+    this.$el.html(this.createTemplate(this.model.toJSON()));
   }
 });
