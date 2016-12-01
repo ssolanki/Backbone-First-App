@@ -19,7 +19,7 @@ var Animal = Backbone.Model.extend({
 
 // Backbone Views
 
-var animalView = Backbone.View.extend({
+var AnimalView = Backbone.View.extend({
   tagName: "li",
   className: "animal",
   id: "dogs",
@@ -28,7 +28,7 @@ var animalView = Backbone.View.extend({
     "click .edit": "editAnimal",
     "click .delete": "deleteAnimal"
   },
-  createTemplate: _.template('<%= name %> is <%= color %>.'),
+  createTemplate: _.template("<%= name %> is <%= color %>."),
   initialize: function(){
     this.render();    // render define logic for the app
     this.on("change",function(){
@@ -41,3 +41,29 @@ var animalView = Backbone.View.extend({
     this.$el.html(this.createTemplate(this.model.toJSON()));
   }
 });
+
+var AnimalCollection = Backbone.Collection.extend({
+  model: Animal
+});
+
+var dog = new Animal({name: "Tom", color: "Red"});
+var dogView = new AnimalView({model: dog});
+var animalCollection = new AnimalCollection();
+animalCollection.add(dog);
+var cat = new Animal({name: "Lisa", color: "Yellow"});
+var catView = new AnimalView({model: cat});
+animalCollection.add(cat);
+animalCollection.add([
+  {
+    name: "Sugar",
+    color: "black",
+  },
+  {
+    name: "Gizmo",
+    color: "tan",
+  },
+  {
+    name: "Biscuit",
+    color: "brown",
+  }
+]);
