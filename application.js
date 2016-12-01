@@ -42,6 +42,19 @@ var AnimalView = Backbone.View.extend({
   }
 });
 
+var AnimalsView = Backbone.View.extend({
+  tagName: "ul",
+  initialize: function(){
+    console.log(this.collection.models);
+    this.collection;
+  },
+  render: function(){
+    this.collection.each(function(Animal){
+      var animalView = new AnimalView({model:Animal});
+      $(document.body).append(animalView.el);
+    });
+  }
+})
 var AnimalCollection = Backbone.Collection.extend({
   model: Animal
 });
@@ -67,3 +80,6 @@ animalCollection.add([
     color: "brown",
   }
 ]);
+
+var animalsView = new AnimalsView({collection: animalCollection});
+animalsView.render();
